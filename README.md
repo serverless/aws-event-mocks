@@ -3,8 +3,9 @@ A small library that includes details mocks of AWS Lambda event sources. Useful 
 
 ## Usage
 
+### SNS
+
 ```js
-// SNS
 const createSnsEvent = require('aws-event-mocks').createSnsEvent;
 const event = createSnsEvent({
   Records: [{
@@ -14,7 +15,11 @@ const event = createSnsEvent({
   }]
 });
 
-// API Gateway
+```
+
+### API Gateway
+
+```js
 const createApigEvent = require('aws-event-mocks').createApigEvent;
 const event = createApigEvent({
   body: {
@@ -22,8 +27,11 @@ const event = createApigEvent({
     last_name: 'Smith'
   }
 });
+```
 
-// S3
+### S3
+
+```js
 const createS3Event = require('aws-event-mocks').createS3Event;
 const event = createS3Event({
   Records: [{
@@ -38,8 +46,11 @@ const event = createS3Event({
     }
   }]
 });
+```
 
-// Scheduled
+### Scheduled
+
+```js
 const createScheduledEvent = require('aws-event-mocks').createScheduledEvent;
 const event = createScheduledEvent({
   region: 'us-west-2'
