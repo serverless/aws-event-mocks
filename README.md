@@ -1,6 +1,8 @@
 # AWS Event Mocks
 A small library that includes details mocks of AWS Lambda event sources. Useful for use when unit testing your Lambda functions. Supported Event Sources are: SNS, API Gateway, S3, & Scheduled.
 
+The library simply uses default event source mock templates and merge it with any overwrite you provide. [Check out the JSON template files](/lib/eventTemplates) to learn more about the data structure of each event source.
+
 ## Usage
 
 ### SNS
