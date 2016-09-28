@@ -3,6 +3,7 @@ module.exports = {
   "plugins": [],
   "rules": {
     "func-names": "off",
+    "prefer-arrow-callback": "off",
 
     // doesn't work in node v4 :(
     "strict": "off",
