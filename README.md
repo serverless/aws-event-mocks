@@ -1,32 +1,37 @@
 # AWS Event Mocks
 A small library that includes details mocks of AWS Lambda event sources. Useful for use when unit testing your Lambda functions. Supported Event Sources are: SNS, API Gateway, S3, & Scheduled.
 
-The library simply uses default event source mock templates and merge it with any overwrite you provide. [Check out the JSON template files](/lib/eventTemplates) to learn more about the data structure of each event source.
+The library simply uses default event source mock templates and merge it with any overwrite you provide. [Check out the JSON template files](/events) to learn more about the data structure of each event source.
 
 ## Usage
 
 ### SNS
 
 ```js
-const createSnsEvent = require('aws-event-mocks').createSnsEvent;
-const event = createSnsEvent({
-  Records: [{
-    Sns: {
-      Message: 'trigger-email'
-    }
-  }]
+const createEvent = require('aws-event-mocks');
+const mocked = createEvent({
+  template: 'aws:sns',
+  merge: {
+    Records: [{
+      Sns: {
+        Message: 'trigger-email'
+      }
+    }]
+  }
 });
-
 ```
 
 ### API Gateway
 
 ```js
-const createApigEvent = require('aws-event-mocks').createApigEvent;
-const event = createApigEvent({
-  body: {
-    first_name: 'Sam',
-    last_name: 'Smith'
+const createEvent = require('aws-event-mocks');
+const event = createEvent({
+  template: 'aws:apiGateway',
+  merge: {
+    body: {
+      first_name: 'Sam',
+      last_name: 'Smith'
+    }
   }
 });
 ```
@@ -34,27 +39,33 @@ const event = createApigEvent({
 ### S3
 
 ```js
-const createS3Event = require('aws-event-mocks').createS3Event;
-const event = createS3Event({
-  Records: [{
-    eventName: 'ObjectCreated:Put',
-    s3: {
-      bucket: {
-        name: 'my-bucket-name'
-      },
-      object: {
-        key: 'object-key'
+const createEvent = require('aws-event-mocks');
+const event = createEvent({
+  template: 'aws:apiGateway',
+  merge: {
+    Records: [{
+      eventName: 'ObjectCreated:Put',
+      s3: {
+        bucket: {
+          name: 'my-bucket-name'
+        },
+        object: {
+          key: 'object-key'
+        }
       }
-    }
-  }]
+    }]
+  }
 });
 ```
 
 ### Scheduled
 
 ```js
-const createScheduledEvent = require('aws-event-mocks').createScheduledEvent;
-const event = createScheduledEvent({
-  region: 'us-west-2'
+const createEvent = require('aws-event-mocks');
+const event = createEvent({
+  template: 'aws:apiGateway',
+  merge: {
+    region: 'us-west-2'
+  }
 });
 ```

@@ -2,20 +2,20 @@
 
 const expect = require('chai').expect;
 
-const createSnsEvent = require('../lib').createSnsEvent;
-const createApigEvent = require('../lib').createApigEvent;
-const createS3Event = require('../lib').createS3Event;
-const createScheduledEvent = require('../lib').createScheduledEvent;
+const createEvent = require('../lib');
 
 describe('#AWS Event Mocks()', function () {
   describe('createSnsEvent()', function () {
     it('should return SNS mocked event', function () {
-      const event = createSnsEvent({
-        Records: [{
-          Sns: {
-            Message: 'trigger-email',
-          },
-        }],
+      const event = createEvent({
+        template: 'aws:sns',
+        merge: {
+          Records: [{
+            Sns: {
+              Message: 'trigger-email',
+            },
+          }],
+        },
       });
 
       expect(event.Records[0].Sns.Message).to.equal('trigger-email');
@@ -25,10 +25,13 @@ describe('#AWS Event Mocks()', function () {
 
   describe('createApigEvent()', function () {
     it('should return APIG mocked event', function () {
-      const event = createApigEvent({
-        body: {
-          first_name: 'Sam',
-          last_name: 'Smith',
+      const event = createEvent({
+        template: 'aws:apiGateway',
+        merge: {
+          body: {
+            first_name: 'Sam',
+            last_name: 'Smith',
+          },
         },
       });
 
@@ -40,17 +43,20 @@ describe('#AWS Event Mocks()', function () {
 
   describe('createS3Event()', function () {
     it('should return S3 mocked event', function () {
-      const event = createS3Event({
-        Records: [{
-          s3: {
-            bucket: {
-              name: 'my-bucket-name',
+      const event = createEvent({
+        template: 'aws:s3',
+        merge: {
+          Records: [{
+            s3: {
+              bucket: {
+                name: 'my-bucket-name',
+              },
+              object: {
+                key: 'object-key',
+              },
             },
-            object: {
-              key: 'object-key',
-            },
-          },
-        }],
+          }],
+        },
       });
 
       expect(event.Records[0].s3.bucket.name).to.equal('my-bucket-name');
@@ -61,8 +67,11 @@ describe('#AWS Event Mocks()', function () {
 
   describe('createScheduledEvent()', function () {
     it('should return Scheduled mocked event', function () {
-      const event = createScheduledEvent({
-        region: 'us-west-2',
+      const event = createEvent({
+        template: 'aws:scheduled',
+        merge: {
+          region: 'us-west-2',
+        },
       });
 
       expect(event.region).to.equal('us-west-2');
