@@ -41,7 +41,7 @@ const event = createEvent({
 ```js
 const createEvent = require('aws-event-mocks');
 const event = createEvent({
-  template: 'aws:apiGateway',
+  template: 'aws:s3',
   merge: {
     Records: [{
       eventName: 'ObjectCreated:Put',
@@ -63,7 +63,7 @@ const event = createEvent({
 ```js
 const createEvent = require('aws-event-mocks');
 const event = createEvent({
-  template: 'aws:apiGateway',
+  template: 'aws:scheduled',
   merge: {
     region: 'us-west-2'
   }
