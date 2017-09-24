@@ -69,3 +69,14 @@ const event = createEvent({
   }
 });
 ```
+
+### Kinesis
+
+```js
+const createEvent = require('aws-event-mocks');
+const event = createEvent({
+  template: 'aws:kinesis',
+  merge: {
+    data: new Buffer('this is test data').toString('base64')
+  }
+});

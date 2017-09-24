@@ -78,4 +78,21 @@ describe('#AWS Event Mocks()', function () {
       expect(event['detail-type']).to.equal('Scheduled Event');
     });
   });
+
+  describe('createKinesisEvent()', function () {
+    it('should return Kinesis mocked event', function () {
+      const event = createEvent({
+        template: 'aws:kinesis',
+        merge: {
+          Records: [{
+            kinesis: {
+              data: new Buffer('kinesis test').toString('base64')
+            }
+          }]
+        }
+      });
+
+      expect(new Buffer(event.Records[0].kinesis.data, 'base64').toString('ascii')).to.equal('kinesis test');
+    });
+  });
 });
