@@ -63,6 +63,43 @@ describe('#AWS Event Mocks()', function () {
       expect(event.Records[0].s3.object.key).to.equal('object-key');
       expect(event.Records[0].eventName).to.equal('ObjectCreated:Put');
     });
+    it('should return S3 mocked event without side-effect', function () {
+      const event = createEvent({
+        template: 'aws:s3',
+        merge: {
+          Records: [{
+            s3: {
+              bucket: {
+                name: 'my-bucket-name',
+              },
+              object: {
+                key: 'object-key',
+              },
+            },
+          }],
+        },
+      });
+
+      const event2 = createEvent({
+        template: 'aws:s3',
+        merge: {
+          Records: [{
+            s3: {
+              bucket: {
+                name: 'my-bucket-name',
+              },
+              object: {
+                key: 'object-key-2',
+              },
+            },
+          }],
+        },
+      });
+
+      expect(event.Records[0].s3.bucket.name).to.equal('my-bucket-name');
+      expect(event.Records[0].s3.object.key).to.equal('object-key');
+      expect(event.Records[0].eventName).to.equal('ObjectCreated:Put');
+    });
   });
 
   describe('createScheduledEvent()', function () {
