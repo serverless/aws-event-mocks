@@ -23,6 +23,24 @@ describe('#AWS Event Mocks()', function () {
     });
   });
 
+  describe('createSqsEvent()', function () {
+    it('should return SQS mocked event', function () {
+      const event = createEvent({
+        template: 'aws:sqs',
+        merge: {
+          Records: [{
+            body: {
+              foo: 'bar'
+            }
+          }],
+        },
+      });
+
+      expect(event.Records[0].body.foo).to.equal('bar');
+      expect(event.Records[0].eventSource).to.equal('aws:sqs');
+    });
+  });
+
   describe('createApigEvent()', function () {
     it('should return APIG mocked event', function () {
       const event = createEvent({
