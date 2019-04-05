@@ -30,8 +30,26 @@ describe('#AWS Event Mocks()', function () {
         merge: {
           Records: [{
             body: {
-              foo: 'bar'
-            }
+              foo: 'bar',
+            },
+          }],
+        },
+      });
+
+      expect(event.Records[0].body.foo).to.equal('bar');
+      expect(event.Records[0].eventSource).to.equal('aws:sqs');
+    });
+  });
+
+  describe('createDynamoDbEvent()', function () {
+    it('should return DynamoDb mocked event', function () {
+      const event = createEvent({
+        template: 'aws:sqs',
+        merge: {
+          Records: [{
+            body: {
+              foo: 'bar',
+            },
           }],
         },
       });
@@ -141,13 +159,14 @@ describe('#AWS Event Mocks()', function () {
         merge: {
           Records: [{
             kinesis: {
-              data: new Buffer('kinesis test').toString('base64')
-            }
-          }]
-        }
+              data: new Buffer('kinesis test').toString('base64'),
+            },
+          }],
+        },
       });
 
-      expect(new Buffer(event.Records[0].kinesis.data, 'base64').toString('ascii')).to.equal('kinesis test');
+      expect(new Buffer(event.Records[0].kinesis.data, 'base64').toString('ascii'))
+      .to.equal('kinesis test');
     });
   });
 });
