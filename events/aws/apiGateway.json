@@ -23,7 +23,9 @@
     "X-Forwarded-Proto": "https"
   },
   "query": {},
+  "queryStringParameters": {},
   "path": {},
+  "pathParameters":{},
   "identity": {
     "cognitoIdentityPoolId": "",
     "accountId": "",
