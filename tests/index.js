@@ -150,4 +150,28 @@ describe('#AWS Event Mocks()', function () {
       expect(new Buffer(event.Records[0].kinesis.data, 'base64').toString('ascii')).to.equal('kinesis test');
     });
   });
+
+  describe("createDynamodbStreamEvent()", function () {
+    it("Should return DynamoDb stream mocked event", function () {
+      const event = createEvent({
+        template: 'aws:dynamodb',
+        merge: {
+          Records: [{
+            dynamodb: {
+              NewImage: {
+                Message: {
+                  S: "Newest item!"
+                }
+              },
+              StreamViewType: "NEW_IMAGES",
+            }
+          }]
+        }
+      });
+
+      expect(event.Records[0].eventSource).to.equal('aws:dynamodb');
+      expect(event.Records[0].dynamodb.StreamViewType).to.equal("NEW_IMAGES");
+      expect(event.Records[0].dynamodb.NewImage.Message.S).to.equal("Newest item!");
+    })
+  })
 });
