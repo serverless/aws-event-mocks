@@ -80,3 +80,25 @@ const event = createEvent({
     data: new Buffer('this is test data').toString('base64')
   }
 });
+```
+
+### DynamoDB
+
+```js
+const createEvent = require('aws-event-mocks');
+const event = createEvent({
+  template: 'aws:dynamodb',
+  merge: {
+    Records: [{
+      dynamodb: {
+        NewImage: {
+          Message: {
+            S: "Newest item!"
+          }
+        },
+        StreamViewType: "NEW_IMAGES",
+      }
+    }]
+  }
+});
+```
